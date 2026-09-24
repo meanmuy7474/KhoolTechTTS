@@ -814,11 +814,13 @@ a { color: var(--accent-light); text-decoration: none; }
   flex: 1;
   height: 4px;
   border-radius: 99px;
-  background: var(--surface-3);
+  background: transparent;
   -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
   outline: none;
+  padding: 0;
+  margin: 0;
 }
 .audio-seek::-webkit-slider-runnable-track {
   height: 4px;

@@ -19,14 +19,42 @@ export default function AudioPlayer({ audioUrl, onDownload, t }: AudioPlayerProp
     const audio = audioRef.current;
     if (!audio) return;
 
-    const onTimeUpdate = () => setCurrentTime(audio.currentTime);
-    const onDurationChange = () => setDuration(audio.duration);
-    const onEnded = () => setIsPlaying(false);
+    setCurrentTime(0);
+    setIsPlaying(false);
+    setDuration(0);
+
+    const updateDuration = () => {
+      if (audio.duration && isFinite(audio.duration)) {
+        setDuration(audio.duration);
+      }
+    };
+
+    const onTimeUpdate = () => {
+      if (audio.duration && audio.currentTime >= audio.duration) {
+        setCurrentTime(audio.duration);
+      } else {
+        setCurrentTime(audio.currentTime);
+      }
+    };
+
+    const onSeeked = () => {
+      setCurrentTime(audio.currentTime);
+    };
+
+    const onEnded = () => {
+      setIsPlaying(false);
+      if (audio.duration && isFinite(audio.duration)) {
+        setCurrentTime(audio.duration);
+      }
+    };
+
     const onPlay = () => setIsPlaying(true);
     const onPause = () => setIsPlaying(false);
 
     audio.addEventListener("timeupdate", onTimeUpdate);
-    audio.addEventListener("durationchange", onDurationChange);
+    audio.addEventListener("seeked", onSeeked);
+    audio.addEventListener("durationchange", updateDuration);
+    audio.addEventListener("loadedmetadata", updateDuration);
     audio.addEventListener("ended", onEnded);
     audio.addEventListener("play", onPlay);
     audio.addEventListener("pause", onPause);
@@ -36,7 +64,9 @@ export default function AudioPlayer({ audioUrl, onDownload, t }: AudioPlayerProp
 
     return () => {
       audio.removeEventListener("timeupdate", onTimeUpdate);
-      audio.removeEventListener("durationchange", onDurationChange);
+      audio.removeEventListener("seeked", onSeeked);
+      audio.removeEventListener("durationchange", updateDuration);
+      audio.removeEventListener("loadedmetadata", updateDuration);
       audio.removeEventListener("ended", onEnded);
       audio.removeEventListener("play", onPlay);
       audio.removeEventListener("pause", onPause);
@@ -49,14 +79,20 @@ export default function AudioPlayer({ audioUrl, onDownload, t }: AudioPlayerProp
     if (isPlaying) {
       audio.pause();
     } else {
-      audio.play();
+      if (audio.ended || (duration > 0 && currentTime >= duration)) {
+        audio.currentTime = 0;
+        setCurrentTime(0);
+      }
+      audio.play().catch(() => {});
     }
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTime = Number(e.target.value);
+    setCurrentTime(newTime);
     const audio = audioRef.current;
     if (!audio) return;
-    audio.currentTime = Number(e.target.value);
+    audio.currentTime = newTime;
   };
 
   const formatTime = (s: number) => {
@@ -67,7 +103,8 @@ export default function AudioPlayer({ audioUrl, onDownload, t }: AudioPlayerProp
   };
 
   const bars = Array.from({ length: 28 });
-  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const progressPercent =
+    duration > 0 ? Math.min(100, Math.max(0, (currentTime / duration) * 100)) : 0;
 
   return (
     <div className="audio-player" role="region" aria-label="Audio player">
@@ -110,9 +147,9 @@ export default function AudioPlayer({ audioUrl, onDownload, t }: AudioPlayerProp
           type="range"
           className="audio-seek"
           min={0}
-          max={duration || 0}
-          step={0.1}
-          value={currentTime}
+          max={duration > 0 ? duration : 0}
+          step="any"
+          value={duration > 0 ? Math.min(currentTime, duration) : 0}
           onChange={handleSeek}
           style={{ "--progress": `${progressPercent}%` } as React.CSSProperties}
           aria-label={t.seekLabel}
