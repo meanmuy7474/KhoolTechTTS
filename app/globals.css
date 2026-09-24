@@ -815,22 +815,51 @@ a { color: var(--accent-light); text-decoration: none; }
   height: 4px;
   border-radius: 99px;
   background: var(--surface-3);
+  -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
   outline: none;
-}
-.audio-seek::-webkit-slider-thumb {
-  appearance: none;
-  width: 14px; height: 14px;
-  border-radius: 50%;
-  background: var(--accent-light);
-  box-shadow: 0 0 6px var(--accent-glow);
-  cursor: pointer;
 }
 .audio-seek::-webkit-slider-runnable-track {
   height: 4px;
   border-radius: 99px;
   background: linear-gradient(90deg, var(--accent) var(--progress, 0%), var(--surface-3) var(--progress, 0%));
+}
+.audio-seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  box-shadow: 0 0 6px var(--accent-glow);
+  cursor: pointer;
+  margin-top: -5px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.audio-seek::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+.audio-seek::-moz-range-track {
+  height: 4px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent) var(--progress, 0%), var(--surface-3) var(--progress, 0%));
+  border: none;
+}
+.audio-seek::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  box-shadow: 0 0 6px var(--accent-glow);
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.audio-seek::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 10px var(--accent-glow);
 }
 
 /* ── Error Toast ─────────────────────────────────────────────── */

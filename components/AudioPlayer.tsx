@@ -67,6 +67,7 @@ export default function AudioPlayer({ audioUrl, onDownload, t }: AudioPlayerProp
   };
 
   const bars = Array.from({ length: 28 });
+  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
     <div className="audio-player" role="region" aria-label="Audio player">
@@ -102,7 +103,6 @@ export default function AudioPlayer({ audioUrl, onDownload, t }: AudioPlayerProp
             </svg>
           )}
         </button>
-
         <span className="audio-time">{formatTime(currentTime)}</span>
 
         <input
@@ -114,6 +114,7 @@ export default function AudioPlayer({ audioUrl, onDownload, t }: AudioPlayerProp
           step={0.1}
           value={currentTime}
           onChange={handleSeek}
+          style={{ "--progress": `${progressPercent}%` } as React.CSSProperties}
           aria-label={t.seekLabel}
         />
 
