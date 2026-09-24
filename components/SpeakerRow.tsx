@@ -1,6 +1,6 @@
 "use client";
 
-import { VOICES } from "@/lib/voices";
+import { VOICES, getGroupedVoices } from "@/lib/voices";
 import { Translations } from "@/lib/i18n";
 
 export interface SpeakerData {
@@ -49,10 +49,14 @@ export default function SpeakerRow({ speaker, index, onUpdate, onRemove, canRemo
           onChange={(e) => onUpdate(speaker.id, "voice", e.target.value)}
           aria-label={t.speakerVoiceLabel(index + 1)}
         >
-          {VOICES.map((v) => (
-            <option key={v.name} value={v.name}>
-              {v.name} — {v.tone} {v.gender === "Female" ? "♀" : "♂"}
-            </option>
+          {getGroupedVoices(t).map((group) => (
+            <optgroup key={group.id} label={group.label}>
+              {group.voices.map((v) => (
+                <option key={v.name} value={v.name}>
+                  {v.name} — {v.tone} ({v.gender === "Female" ? "♀" : "♂"})
+                </option>
+              ))}
+            </optgroup>
           ))}
         </select>
         {canRemove && (

@@ -6,16 +6,17 @@ interface VoiceCardProps {
   voice: Voice;
   selected: boolean;
   onSelect: (name: string) => void;
+  groupLabel?: string;
 }
 
-export default function VoiceCard({ voice, selected, onSelect }: VoiceCardProps) {
+export default function VoiceCard({ voice, selected, onSelect, groupLabel }: VoiceCardProps) {
   return (
     <button
       id={`voice-card-${voice.name.toLowerCase()}`}
       className={`voice-card ${selected ? "voice-card--selected" : ""}`}
       onClick={() => onSelect(voice.name)}
       aria-pressed={selected}
-      title={voice.description}
+      title={`${voice.name} — ${voice.description} (${groupLabel || voice.badgeLabel})`}
       style={{ "--voice-color": voice.color } as React.CSSProperties}
     >
       <div className="voice-card__icon">
@@ -32,7 +33,15 @@ export default function VoiceCard({ voice, selected, onSelect }: VoiceCardProps)
         )}
       </div>
       <div className="voice-card__body">
-        <span className="voice-card__name">{voice.name}</span>
+        <div className="voice-card__name-row">
+          <span className="voice-card__name">{voice.name}</span>
+          <span
+            className={`voice-card__badge voice-card__badge--${voice.languageGroup}`}
+            aria-label={`Language: ${voice.badgeLabel}`}
+          >
+            {voice.badgeLabel}
+          </span>
+        </div>
         <span className="voice-card__tone">{voice.tone}</span>
       </div>
       <span className="voice-card__gender">

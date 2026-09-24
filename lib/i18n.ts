@@ -52,6 +52,13 @@ export interface Translations {
 
   // Sidebar — Select Voice
   selectVoice: string;
+  voiceFilterLabel: string;
+  allLanguages: string;
+  langEnglish: string;
+  langKhmer: string;
+  langChinese: string;
+  langMultilingual: string;
+  noVoicesFound: string;
 
   // Sidebar — How it works
   howItWorks: string;
@@ -114,6 +121,13 @@ const en: Translations = {
   downloadWav: "Download WAV",
 
   selectVoice: "Select Voice",
+  voiceFilterLabel: "Language Support",
+  allLanguages: "All Languages",
+  langEnglish: "English",
+  langKhmer: "Khmer (ខ្មែរ)",
+  langChinese: "Chinese (中文)",
+  langMultilingual: "Multilingual",
+  noVoicesFound: "No voices found for this language filter.",
 
   howItWorks: "How it works",
   step1: "Enter your text or upload a file",
@@ -127,7 +141,7 @@ const en: Translations = {
   channels: "Channels",
   maxText: "Max text",
 
-  footer: "KhoolTech TTS \u00b7 Built with Next.js & Gemini 3.8 Flash TTS",
+  footer: "KhoolTech TTS · Built with Next.js & Gemini 3.8 Flash TTS",
 };
 
 const kh: Translations = {
@@ -173,6 +187,13 @@ const kh: Translations = {
   downloadWav: "ទាញយក WAV",
 
   selectVoice: "ជ្រើសរើសសំឡេង",
+  voiceFilterLabel: "ការគាំទ្រភាសា",
+  allLanguages: "ភាសាទាំងអស់",
+  langEnglish: "អង់គ្លេស",
+  langKhmer: "ខ្មែរ (Khmer)",
+  langChinese: "ចិន (Chinese)",
+  langMultilingual: "ពហុភាសា (Multilingual)",
+  noVoicesFound: "រកមិនឃើញសំឡេងសម្រាប់តម្រងភាសានេះទេ។",
 
   howItWorks: "របៀបប្រើប្រាស់",
   step1: "បញ្ចូលអត្ថបទ ឬផ្ទុកឡើងនូវឯកសារ",
@@ -192,59 +213,66 @@ const kh: Translations = {
 const zh: Translations = {
   poweredBy: "由 Gemini 3.8 Flash 驱动",
 
-  aiVoiceStudio: "AI \u8bed\u97f3\u5de5\u4f5c\u5ba4",
-  heroTitle: "\u5c06\u6587\u5b57\u8f6c\u5316\u4e3a",
-  heroTitleAccent: "\u81ea\u7136\u8bed\u97f3",
+  aiVoiceStudio: "AI 语音工作室",
+  heroTitle: "将文字转化为",
+  heroTitleAccent: "自然语音",
   heroSubtitle:
-    "\u4ece 13 \u79cd\u5bcc\u6709\u8868\u73b0\u529b\u7684 AI \u58f0\u97f3\u4e2d\u9009\u62e9\uff0c\u751f\u6210\u5355\u4eba\u65c1\u767d\u6216\u591a\u4eba\u5bf9\u8bdd\uff0c\u5e76\u5373\u65f6\u4e0b\u8f7d\u5f55\u97f3\u5ba4\u54c1\u8d28\u7684 WAV \u97f3\u9891\u3002",
+    "从 13 种富有表现力的 AI 声音中选择，生成单人旁白或多人对话，并即时下载录音室品质的 WAV 音频。",
 
-  singleSpeaker: "\u5355\u4eba\u6a21\u5f0f",
-  multiSpeaker: "\u591a\u4eba\u6a21\u5f0f",
+  singleSpeaker: "单人模式",
+  multiSpeaker: "多人模式",
 
-  yourText: "\u60a8\u7684\u6587\u5b57",
-  dialogueScript: "\u5bf9\u8bdd\u811a\u672c",
-  textareaPlaceholder: "\u5728\u6b64\u8f93\u5165\u6216\u7c98\u8d34\u60a8\u7684\u6587\u5b57\u2026 \u4e5f\u53ef\u4e0a\u4f20 .txt \u6216 .md \u6587\u4ef6\u3002",
+  yourText: "您的文字",
+  dialogueScript: "对话脚本",
+  textareaPlaceholder: "在此输入或粘贴您的文字… 也可以上传 .txt 或 .md 文件。",
   charCount: (current, max) => `${current} / ${max}`,
 
-  uploadFile: "\u4e0a\u4f20 .txt / .md",
+  uploadFile: "上传 .txt / .md",
 
-  speakerNamePlaceholder: (n) => `\u53d1\u8a00\u4eba ${n} \u7684\u540d\u5b57`,
-  speakerSays: (name, n) => `${name || `\u53d1\u8a00\u4eba ${n}`} \u8bf4\u7684\u8bdd\u2026`,
-  speakerNameLabel: (n) => `\u53d1\u8a00\u4eba ${n} \u7684\u540d\u5b57`,
-  speakerVoiceLabel: (n) => `\u53d1\u8a00\u4eba ${n} \u7684\u58f0\u97f3`,
-  speakerDialogueLabel: (n) => `\u53d1\u8a00\u4eba ${n} \u7684\u5bf9\u8bdd`,
-  removeSpeaker: (n) => `\u5220\u9664\u53d1\u8a00\u4eba ${n}`,
+  speakerNamePlaceholder: (n) => `发言人 ${n} 的名字`,
+  speakerSays: (name, n) => `${name || `发言人 ${n}`} 说的话…`,
+  speakerNameLabel: (n) => `发言人 ${n} 的名字`,
+  speakerVoiceLabel: (n) => `发言人 ${n} 的声音`,
+  speakerDialogueLabel: (n) => `发言人 ${n} 的对话`,
+  removeSpeaker: (n) => `删除发言人 ${n}`,
 
-  addSpeaker: "\u6dfb\u52a0\u53d1\u8a00\u4eba",
-  addSpeakerLabel: "\u518d\u6dfb\u52a0\u4e00\u4f4d\u53d1\u8a00\u4eba",
+  addSpeaker: "添加发言人",
+  addSpeakerLabel: "再添加一位发言人",
 
-  generateSpeech: "\u751f\u6210\u8bed\u97f3",
-  generatingSpeech: "\u6b63\u5728\u751f\u6210\u8bed\u97f3\u2026",
+  generateSpeech: "生成语音",
+  generatingSpeech: "正在生成语音…",
 
-  errorEmptyText: "\u8bf7\u8f93\u5165\u8981\u8f6c\u6362\u4e3a\u8bed\u97f3\u7684\u6587\u5b57\u3002",
-  errorFewSpeakers: "\u8bf7\u81f3\u5c11\u586b\u5199 2 \u4f4d\u53d1\u8a00\u4eba\u7684\u59d3\u540d\u548c\u6587\u5b57\u3002",
+  errorEmptyText: "请输入要转换为语音的文字。",
+  errorFewSpeakers: "请至少填写 2 位发言人的姓名和文字。",
 
-  audioReady: "\u97f3\u9891\u5df2\u5c31\u7eea",
-  playLabel: "\u64ad\u653e",
-  pauseLabel: "\u6682\u505c",
-  seekLabel: "\u62d6\u52a8\u8fdb\u5ea6",
-  downloadWav: "\u4e0b\u8f7d WAV",
+  audioReady: "音频已就绪",
+  playLabel: "播放",
+  pauseLabel: "暂停",
+  seekLabel: "拖动进度",
+  downloadWav: "下载 WAV",
 
-  selectVoice: "\u9009\u62e9\u58f0\u97f3",
+  selectVoice: "选择声音",
+  voiceFilterLabel: "语言支持",
+  allLanguages: "所有语言",
+  langEnglish: "英语 (English)",
+  langKhmer: "高棉语 (ខ្មែរ)",
+  langChinese: "中文 (Chinese)",
+  langMultilingual: "多语言 (Multilingual)",
+  noVoicesFound: "未找到符合该语言筛选的声音。",
 
-  howItWorks: "\u4f7f\u7528\u65b9\u6cd5",
-  step1: "\u8f93\u5165\u6587\u5b57\u6216\u4e0a\u4f20\u6587\u4ef6",
-  step2: "\u9009\u62e9\u58f0\u97f3\u6216\u8bbe\u7f6e\u5bf9\u8bdd",
-  step3: "\u70b9\u51fb\u751f\u6210\uff0c\u7acb\u5373\u6536\u542c",
-  step4: "\u5c06\u97f3\u9891\u4e0b\u8f7d\u4e3a WAV \u6587\u4ef6",
+  howItWorks: "使用方法",
+  step1: "输入文字或上传文件",
+  step2: "选择声音或设置对话",
+  step3: "点击生成，立即收听",
+  step4: "将音频下载为 WAV 文件",
 
-  output: "\u8f93\u51fa",
-  format: "\u683c\u5f0f",
-  sampleRate: "\u91c7\u6837\u7387",
-  channels: "\u58f0\u9053",
-  maxText: "\u6700\u5927\u6587\u5b57",
+  output: "输出",
+  format: "格式",
+  sampleRate: "采样率",
+  channels: "声道",
+  maxText: "最大文字",
 
-  footer: "KhoolTech TTS \u00b7 \u57fa\u4e8e Next.js & Gemini 3.8 Flash TTS \u6784\u5efa",
+  footer: "KhoolTech TTS · 基于 Next.js & Gemini 3.8 Flash TTS 构建",
 };
 
 export const translations: Record<Locale, Translations> = { en, kh, zh };

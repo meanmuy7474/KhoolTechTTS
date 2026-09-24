@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { VOICES } from "@/lib/voices";
+import { VOICES, VoiceLanguage } from "@/lib/voices";
 import VoiceCard from "@/components/VoiceCard";
 import AudioPlayer from "@/components/AudioPlayer";
 import FileUpload from "@/components/FileUpload";
@@ -23,6 +23,7 @@ export default function Home() {
   // Single speaker state
   const [text, setText] = useState("");
   const [selectedVoice, setSelectedVoice] = useState(VOICES[0].name);
+  const [voiceLanguageFilter, setVoiceLanguageFilter] = useState<VoiceLanguage | "all">("all");
 
   // Multi speaker state
   const [speakers, setSpeakers] = useState<SpeakerData[]>([
@@ -36,6 +37,24 @@ export default function Home() {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const filteredVoices =
+    voiceLanguageFilter === "all"
+      ? VOICES
+      : VOICES.filter((v) => v.languageGroup === voiceLanguageFilter);
+
+  const getVoiceGroupLabel = (group: VoiceLanguage) => {
+    switch (group) {
+      case "kh":
+        return t.langKhmer;
+      case "en":
+        return t.langEnglish;
+      case "zh":
+        return t.langChinese;
+      case "multi":
+        return t.langMultilingual;
+    }
+  };
 
   const handleGenerate = async () => {
     setError(null);
@@ -315,16 +334,51 @@ export default function Home() {
                     </svg>
                     {t.selectVoice}
                   </p>
+
+                  {/* Language filter dropdown */}
+                  <div className="voice-filter-container">
+                    <div className="voice-filter-header">
+                      <label htmlFor="voice-language-filter" className="voice-filter-label">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="2" y1="12" x2="22" y2="12" />
+                          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg>
+                        <span>{t.voiceFilterLabel}</span>
+                      </label>
+                      <span className="voice-filter-count">
+                        {filteredVoices.length} / {VOICES.length}
+                      </span>
+                    </div>
+                    <select
+                      id="voice-language-filter"
+                      className="voice-filter-select"
+                      value={voiceLanguageFilter}
+                      onChange={(e) => setVoiceLanguageFilter(e.target.value as VoiceLanguage | "all")}
+                      aria-label={t.voiceFilterLabel}
+                    >
+                      <option value="all">{t.allLanguages} ({VOICES.length})</option>
+                      <option value="kh">{t.langKhmer} ({VOICES.filter((v) => v.languageGroup === "kh").length})</option>
+                      <option value="en">{t.langEnglish} ({VOICES.filter((v) => v.languageGroup === "en").length})</option>
+                      <option value="zh">{t.langChinese} ({VOICES.filter((v) => v.languageGroup === "zh").length})</option>
+                      <option value="multi">{t.langMultilingual} ({VOICES.filter((v) => v.languageGroup === "multi").length})</option>
+                    </select>
+                  </div>
+
                   <div className="voice-grid" role="radiogroup" aria-label={t.selectVoice}>
-                    {VOICES.map((voice) => (
+                    {filteredVoices.map((voice) => (
                       <VoiceCard
                         key={voice.name}
                         voice={voice}
                         selected={selectedVoice === voice.name}
                         onSelect={setSelectedVoice}
+                        groupLabel={getVoiceGroupLabel(voice.languageGroup)}
                       />
                     ))}
                   </div>
+                  {filteredVoices.length === 0 && (
+                    <p className="voice-empty-hint">{t.noVoicesFound}</p>
+                  )}
                 </div>
               )}
 
