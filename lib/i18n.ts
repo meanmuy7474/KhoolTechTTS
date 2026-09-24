@@ -72,7 +72,7 @@ export interface Translations {
 }
 
 const en: Translations = {
-  poweredBy: "Powered by Gemini 2.5 Flash",
+  poweredBy: "Powered by Gemini 3.8 Flash",
 
   aiVoiceStudio: "AI Voice Studio",
   heroTitle: "Turn text into",
@@ -127,11 +127,11 @@ const en: Translations = {
   channels: "Channels",
   maxText: "Max text",
 
-  footer: "KhoolTech TTS \u00b7 Built with Next.js & Gemini 2.5 Flash TTS",
+  footer: "KhoolTech TTS \u00b7 Built with Next.js & Gemini 3.8 Flash TTS",
 };
 
 const kh: Translations = {
-  poweredBy: "ដំណើរការដោយ Gemini 2.5 Flash",
+  poweredBy: "ដំណើរការដោយ Gemini 3.8 Flash",
 
   aiVoiceStudio: "ស្ទូឌីយោសំឡេង AI",
   heroTitle: "បំប្លែងអត្ថបទទៅជា",
@@ -186,11 +186,11 @@ const kh: Translations = {
   channels: "ប៉ុស្តិ៍សំឡេង (Channels)",
   maxText: "ប្រវែងអត្ថបទអតិបរមា",
 
-  footer: "KhoolTech TTS · បង្កើតឡើងដោយ Next.js & Gemini 2.5 Flash TTS",
+  footer: "KhoolTech TTS · បង្កើតឡើងដោយ Next.js & Gemini 3.8 Flash TTS",
 };
 
 const zh: Translations = {
-  poweredBy: "\u7531 Gemini 2.5 Flash \u9a71\u52a8",
+  poweredBy: "由 Gemini 3.8 Flash 驱动",
 
   aiVoiceStudio: "AI \u8bed\u97f3\u5de5\u4f5c\u5ba4",
   heroTitle: "\u5c06\u6587\u5b57\u8f6c\u5316\u4e3a",
