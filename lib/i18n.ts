@@ -244,7 +244,7 @@ const zh: Translations = {
   channels: "\u58f0\u9053",
   maxText: "\u6700\u5927\u6587\u5b57",
 
-  footer: "KhoolTech TTS \u00b7 \u57fa\u4e8e Next.js & Gemini 2.5 Flash TTS \u6784\u5efa",
+  footer: "KhoolTech TTS \u00b7 \u57fa\u4e8e Next.js & Gemini 3.8 Flash TTS \u6784\u5efa",
 };
 
 export const translations: Record<Locale, Translations> = { en, kh, zh };

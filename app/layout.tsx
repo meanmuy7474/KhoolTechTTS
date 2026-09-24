@@ -18,11 +18,11 @@ const kantumruy = Kantumruy_Pro({
 export const metadata: Metadata = {
   title: "KhoolTech TTS — AI Voice Studio",
   description:
-    "Professional text-to-speech studio powered by Google Gemini 2.5 Flash. Convert text to natural, expressive audio with 13 premium AI voices.",
+    "Professional text-to-speech studio powered by Google Gemini 3.8 Flash. Convert text to natural, expressive audio with 13 premium AI voices.",
   keywords: ["text-to-speech", "TTS", "AI voice", "Gemini", "audio generation"],
   openGraph: {
     title: "KhoolTech TTS — AI Voice Studio",
-    description: "Professional TTS studio powered by Google Gemini 2.5 Flash",
+    description: "Professional TTS studio powered by Google Gemini 3.8 Flash",
     type: "website",
   },
 };
